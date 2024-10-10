@@ -43,7 +43,7 @@ jobs:
       - name: Deploy Docker container
         run: |
          # Pull the latest image and run it
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/https://github.com/Lewie12/StaticOne.git
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/newstaticone:latest
           docker stop staticone || true
           docker rm staticone || true
           docker run -d -p 8080:80 --name staticone ${{ secrets.DOCKERHUB_USERNAME }}/newstaticone:latest
