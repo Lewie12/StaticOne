@@ -50,19 +50,19 @@ jobs:
           chmod 600 private_key.pem
 
           # Create the .ssh directory if it doesn't exist
-          mkdir -p ~/.ssh
-
-          # Create the known_hosts file if it doesn't exist
-          touch ~/.ssh/known_hosts
+          mkdir -p $HOME/.ssh
 
           # Add EC2 to known hosts to avoid host key verification issues
-          ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+          ssh-keyscan -H $HOST >> $HOME/.ssh/known_hosts
 
           # Connect to the EC2 instance and pull the latest Docker image
           ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST << 'EOF'
+            # Pull the latest Docker image
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/newstaticone:latest
+            # Stop and remove the old container
             docker stop staticone || true
             docker rm staticone || true
+            # Run the new container
             docker run -d -p 8090:80 --name staticone ${{ secrets.DOCKERHUB_USERNAME }}/newstaticone:latest
           EOF
 
