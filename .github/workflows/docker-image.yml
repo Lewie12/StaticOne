@@ -35,8 +35,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-
+    
     steps:
+      # Checkout the repository to access the files
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Deploy Docker container on EC2
         env:
           PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
