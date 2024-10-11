@@ -9,9 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-  build-deploy:
-    runs-on: ubuntu-latest
     
     steps:
       # Checkout the repository to access the files
